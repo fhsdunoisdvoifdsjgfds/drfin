@@ -1,7 +1,7 @@
-import 'package:dark_fin/blocs/incom/incom_bloc.dart';
-import 'package:dark_fin/core/models/newss.dart';
-import 'package:dark_fin/core/utilsss.dart';
-import 'package:dark_fin/features/news/widgets/news_widget.dart';
+import 'package:tsafer/blocs/incom/incom_bloc.dart';
+import 'package:tsafer/core/models/newss.dart';
+import 'package:tsafer/core/utilsss.dart';
+import 'package:tsafer/features/news/widgets/news_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -144,7 +144,7 @@ class _BalanceCardState extends State<BalanceCard> {
           BlocBuilder<IncomBloc, IncomState>(
             builder: (context, state) {
               return Text(
-                '${currencies[selectedCurrency1].symbol}${getBalance()}',
+                '${currencies[selectedCurrency1].symbol}${getBalance().toStringAsFixed(2)}',
                 style: const TextStyle(
                   color: CupertinoColors.white,
                   fontSize: 30,

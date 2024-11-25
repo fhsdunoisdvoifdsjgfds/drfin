@@ -1,4 +1,4 @@
-import 'package:dark_fin/core/models/newss.dart';
+import 'package:tsafer/core/models/newss.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';

@@ -1,6 +1,9 @@
-import 'package:dark_fin/blocs/incom/incom_bloc.dart';
-import 'package:dark_fin/blocs/nav/nav_bloc.dart';
+import 'package:tsafer/blocs/incom/incom_bloc.dart';
+import 'package:tsafer/blocs/nav/nav_bloc.dart';
+import 'package:tsafer/core/utilsss.dart';
+import 'package:tsafer/features/splash/check_list.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -125,16 +128,16 @@ class InitialPageState extends State<InitialPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '\$0',
-                      style: TextStyle(
+                    Text(
+                      '\$${getBalance().toStringAsFixed(2)}',
+                      style: const TextStyle(
                         color: CupertinoColors.white,
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const Text(
-                      'Available balance',
+                      'Accumulated amount',
                       style: TextStyle(
                         color: CupertinoColors.systemGrey,
                         fontSize: 14,
@@ -158,6 +161,75 @@ class InitialPageState extends State<InitialPage> {
                       ],
                     ),
                   ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1C1C1E),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: const Color(0xffFEDB35).withOpacity(0.3),
+                    width: 1,
+                  ),
+                ),
+                child: CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => const FinanceChecklist(),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: const Color(0xffFEDB35).withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(
+                            CupertinoIcons.checkmark_rectangle,
+                            color: Color(0xffFEDB35),
+                            size: 24,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Financial Checklist',
+                                style: TextStyle(
+                                  color: CupertinoColors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                'Monitor your financial aims',
+                                style: TextStyle(
+                                  color: CupertinoColors.systemGrey,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Icon(
+                          CupertinoIcons.chevron_right,
+                          color: CupertinoColors.systemGrey,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
@@ -187,7 +259,48 @@ class InitialPageState extends State<InitialPage> {
                         final incom = state.incoms[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 12),
-                          child: _buildTransactionCard(incom),
+                          child: Dismissible(
+                            key: Key(incom.id.toString()),
+                            direction: DismissDirection.endToStart,
+                            background: Container(
+                              alignment: Alignment.centerRight,
+                              padding: const EdgeInsets.only(right: 20),
+                              decoration: BoxDecoration(
+                                color: CupertinoColors.systemRed,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: const Icon(
+                                CupertinoIcons.delete,
+                                color: CupertinoColors.white,
+                              ),
+                            ),
+                            onDismissed: (direction) {
+                              context
+                                  .read<IncomBloc>()
+                                  .add(IncomDelete(incom: incom));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                CupertinoSnackBar(
+                                  content: Row(
+                                    children: [
+                                      const Icon(
+                                        CupertinoIcons.delete,
+                                        color: CupertinoColors.white,
+                                        size: 18,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      const Text(
+                                        'Transaction deleted',
+                                        style: TextStyle(
+                                            color: CupertinoColors.white),
+                                      ),
+                                    ],
+                                  ),
+                                  backgroundColor: const Color(0xFF1C1C1E),
+                                ),
+                              );
+                            },
+                            child: _buildTransactionCard(incom),
+                          ),
                         );
                       }
                       return null;
@@ -423,4 +536,21 @@ class InitialPageState extends State<InitialPage> {
       ),
     );
   }
+}
+
+class CupertinoSnackBar extends SnackBar {
+  CupertinoSnackBar({
+    super.key,
+    required Widget content,
+    Color? backgroundColor,
+  }) : super(
+          content: content,
+          backgroundColor: backgroundColor,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          width: 300,
+          duration: const Duration(seconds: 2),
+        );
 }

@@ -5,7 +5,7 @@ part 'btn_event.dart';
 part 'btn_state.dart';
 
 class BtnBloc extends Bloc<BtnEvent, BtnState> {
-  BtnBloc() : super(BtnInitial()) {
+  BtnBloc() : super(BtnInactive()) {
     on<BtnEvent>(
       (event, emit) => switch (event) {
         CheckBtnActive() => _checkBtnActive(event, emit),
@@ -19,7 +19,7 @@ class BtnBloc extends Bloc<BtnEvent, BtnState> {
     Emitter<BtnState> emit,
   ) {
     final isEmpty = event.controllers.any((controller) => controller.isEmpty);
-    emit(isEmpty ? BtnInactive() : BtnInitial());
+    emit(isEmpty ? BtnInactive() : BtnActive());
   }
 
   void _disableBtn(

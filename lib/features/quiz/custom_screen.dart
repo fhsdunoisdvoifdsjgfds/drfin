@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:dark_fin/core/models/questionn.dart';
-import 'package:dark_fin/features/quiz/pages/quiz_page.dart';
+import 'package:tsafer/core/models/questionn.dart';
+import 'package:tsafer/features/quiz/pages/quiz_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

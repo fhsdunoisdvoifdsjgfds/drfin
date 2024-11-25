@@ -161,7 +161,7 @@ class _IncomeEditPageState extends State<IncomeEditPage> {
                 id: widget.incom.id,
                 category: categoryController.text,
                 title: titleController.text,
-                amount: int.parse(amountController.text),
+                amount: double.parse(amountController.text),
               );
               context.read<IncomBloc>().add(IncomEdit(incom: incom));
               context.read<BtnBloc>().add(DisableBtn());

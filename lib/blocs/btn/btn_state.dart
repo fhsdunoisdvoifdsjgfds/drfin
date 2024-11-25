@@ -1,10 +1,10 @@
 part of 'btn_bloc.dart';
 
 @immutable
-sealed class BtnState {}
+abstract class BtnState {}
 
-final class BtnInitial extends BtnState {}
-
-final class BtnInactive extends BtnState {}
+class BtnInitial extends BtnState {}
 
 class BtnActive extends BtnState {}
+
+class BtnInactive extends BtnState {}

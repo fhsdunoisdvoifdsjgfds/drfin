@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dark_fin/blocs/btn/btn_bloc.dart';
-import 'package:dark_fin/core/models/newss.dart';
+import 'package:tsafer/blocs/btn/btn_bloc.dart';
+import 'package:tsafer/core/models/newss.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

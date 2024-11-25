@@ -1,4 +1,4 @@
-import 'package:dark_fin/core/models/questionn.dart';
+import 'package:tsafer/core/models/questionn.dart';
 
 // Вопросы по инвестициям (Investing)
 final List<Questionn> investingQuestions = [

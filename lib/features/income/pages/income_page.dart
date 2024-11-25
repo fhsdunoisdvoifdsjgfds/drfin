@@ -1,9 +1,10 @@
-import 'package:dark_fin/blocs/btn/btn_bloc.dart';
-import 'package:dark_fin/blocs/incom/incom_bloc.dart';
-import 'package:dark_fin/blocs/nav/nav_bloc.dart';
-import 'package:dark_fin/core/models/incom.dart';
-import 'package:dark_fin/core/utilsss.dart';
+import 'package:tsafer/blocs/btn/btn_bloc.dart';
+import 'package:tsafer/blocs/incom/incom_bloc.dart';
+import 'package:tsafer/blocs/nav/nav_bloc.dart';
+import 'package:tsafer/core/models/incom.dart';
+import 'package:tsafer/core/utilsss.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'state_category.dart';
@@ -50,16 +51,26 @@ class _IncomePageState extends State<IncomePage> {
       return;
     }
 
-    final incom = Incom(
-      id: getTimestamp(),
-      category: categoryController.text,
-      title: titleController.text,
-      amount: int.parse(amountController.text),
-    );
+    try {
+      final amount =
+          double.tryParse(amountController.text.replaceAll(',', '.'));
+      if (amount == null) return;
 
-    context.read<IncomBloc>().add(IncomAdd(incom: incom));
-    context.read<NavBloc>().add(ChangeNav(index: 1));
-    context.read<BtnBloc>().add(DisableBtn());
+      final incom = Incom(
+        id: getTimestamp(),
+        category: categoryController.text,
+        title: titleController.text,
+        amount: amount,
+      );
+      context.read<IncomBloc>().add(IncomAdd(incom: incom));
+      titleController.clear();
+      amountController.clear();
+      categoryController.clear();
+      context.read<NavBloc>().add(ChangeNav(index: 1));
+      context.read<BtnBloc>().add(DisableBtn());
+    } catch (e) {
+      debugPrint('Error adding income: $e');
+    }
   }
 
   @override
@@ -178,7 +189,12 @@ class _IncomePageState extends State<IncomePage> {
                             color: CupertinoColors.systemGrey,
                           ),
                           padding: const EdgeInsets.all(16),
-                          keyboardType: TextInputType.number,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d*\.?\d{0,2}')),
+                          ],
                           onChanged: (_) => checkButton(),
                         ),
                       ],

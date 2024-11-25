@@ -1,5 +1,5 @@
-import 'package:dark_fin/features/game/game_screen.dart';
-import 'package:dark_fin/features/quiz/custom_screen.dart';
+import 'package:tsafer/features/game/game_screen.dart';
+import 'package:tsafer/features/quiz/custom_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

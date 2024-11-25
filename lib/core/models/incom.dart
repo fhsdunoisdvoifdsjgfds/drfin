@@ -12,7 +12,7 @@ class Incom {
   String title;
 
   @HiveField(3)
-  int amount;
+  double amount;
 
   Incom({
     required this.id,

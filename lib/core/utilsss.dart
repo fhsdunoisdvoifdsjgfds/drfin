@@ -42,11 +42,10 @@ double getBot(BuildContext context) =>
 double getWidth(BuildContext context) => MediaQuery.of(context).size.width;
 double getHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
-int getBalance() {
-  int total = 0;
+double getBalance() {
+  double total = 0.0;
   for (Incom incom in incomsList) {
-    total += incom.amount;
+    total += incom.amount.toDouble();
   }
-  print(total);
   return total;
 }

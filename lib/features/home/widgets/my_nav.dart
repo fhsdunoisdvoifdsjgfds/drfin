@@ -1,4 +1,4 @@
-import 'package:dark_fin/blocs/nav/nav_bloc.dart';
+import 'package:tsafer/blocs/nav/nav_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +47,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 ),
                 _NavigationButton(
                   index: 5,
-                  icon: CupertinoIcons.question,
+                  icon: CupertinoIcons.question_circle_fill,
                   title: 'Quiz',
                   active: state is NavQuiz,
                 ),

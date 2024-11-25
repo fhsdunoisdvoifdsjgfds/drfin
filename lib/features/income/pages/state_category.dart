@@ -1,8 +1,8 @@
-import 'package:dark_fin/blocs/btn/btn_bloc.dart';
-import 'package:dark_fin/blocs/incom/incom_bloc.dart';
-import 'package:dark_fin/blocs/nav/nav_bloc.dart';
-import 'package:dark_fin/core/models/incom.dart';
-import 'package:dark_fin/core/utilsss.dart';
+import 'package:tsafer/blocs/btn/btn_bloc.dart';
+import 'package:tsafer/blocs/incom/incom_bloc.dart';
+import 'package:tsafer/blocs/nav/nav_bloc.dart';
+import 'package:tsafer/core/models/incom.dart';
+import 'package:tsafer/core/utilsss.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -148,7 +148,7 @@ class _IncomePageState extends State<IncomePage> {
       id: getTimestamp(),
       category: categoryController.text,
       title: titleController.text,
-      amount: int.parse(amountController.text),
+      amount: double.parse(amountController.text),
     );
 
     context.read<IncomBloc>().add(IncomAdd(incom: incom));

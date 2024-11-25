@@ -1,8 +1,12 @@
 import 'dart:ui';
 
-import 'package:dark_fin/features/game/game_calculator.dart';
+import 'package:tsafer/features/game/game_calculator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'number_patterns.dart';
+import 'percentage_master.dart';
+import 'quick_convert.dart';
 
 class MathGame {
   final String id;
@@ -46,7 +50,7 @@ class MathGamesPage extends StatelessWidget {
       icon: CupertinoIcons.chart_bar_alt_fill,
       color: CupertinoColors.systemPurple,
       difficulty: 'Hard',
-      gameScreen: const SpeedCalculatorGame(),
+      gameScreen: const NumberPatternsGame(),
     ),
     MathGame(
       id: 'percentage_master',
@@ -56,7 +60,7 @@ class MathGamesPage extends StatelessWidget {
       icon: CupertinoIcons.percent,
       color: CupertinoColors.systemGreen,
       difficulty: 'Easy',
-      gameScreen: const SpeedCalculatorGame(),
+      gameScreen: const PercentageMasterGame(),
     ),
     MathGame(
       id: 'currency_converter',
@@ -66,7 +70,7 @@ class MathGamesPage extends StatelessWidget {
       icon: CupertinoIcons.money_dollar_circle_fill,
       color: CupertinoColors.systemOrange,
       difficulty: 'Medium',
-      gameScreen: const SpeedCalculatorGame(),
+      gameScreen: const QuickConvertGame(),
     ),
   ];
 
@@ -103,22 +107,6 @@ class MathGamesPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Train Your Brain',
-                      style: TextStyle(
-                        color: CupertinoColors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Improve your math skills with these fun games',
-                      style: TextStyle(
-                        color: CupertinoColors.white.withOpacity(0.6),
-                        fontSize: 16,
-                      ),
-                    ),
                     const SizedBox(height: 24),
                   ],
                 ),
