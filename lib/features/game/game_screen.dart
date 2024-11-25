@@ -32,7 +32,7 @@ class MathGamesPage extends StatelessWidget {
   MathGamesPage({super.key});
 
   final List<MathGame> mathGames = [
-    MathGame(
+    const MathGame(
       id: 'speed_calc',
       name: 'Speed Calculator',
       description:
@@ -40,9 +40,9 @@ class MathGamesPage extends StatelessWidget {
       icon: CupertinoIcons.timer,
       color: CupertinoColors.systemBlue,
       difficulty: 'Medium',
-      gameScreen: const SpeedCalculatorGame(),
+      gameScreen: SpeedCalculatorGame(),
     ),
-    MathGame(
+    const MathGame(
       id: 'number_sequence',
       name: 'Number Patterns',
       description:
@@ -50,9 +50,9 @@ class MathGamesPage extends StatelessWidget {
       icon: CupertinoIcons.chart_bar_alt_fill,
       color: CupertinoColors.systemPurple,
       difficulty: 'Hard',
-      gameScreen: const NumberPatternsGame(),
+      gameScreen: NumberPatternsGame(),
     ),
-    MathGame(
+    const MathGame(
       id: 'percentage_master',
       name: 'Percentage Master',
       description:
@@ -60,9 +60,9 @@ class MathGamesPage extends StatelessWidget {
       icon: CupertinoIcons.percent,
       color: CupertinoColors.systemGreen,
       difficulty: 'Easy',
-      gameScreen: const PercentageMasterGame(),
+      gameScreen: PercentageMasterGame(),
     ),
-    MathGame(
+    const MathGame(
       id: 'currency_converter',
       name: 'Quick Convert',
       description:
@@ -70,7 +70,7 @@ class MathGamesPage extends StatelessWidget {
       icon: CupertinoIcons.money_dollar_circle_fill,
       color: CupertinoColors.systemOrange,
       difficulty: 'Medium',
-      gameScreen: const QuickConvertGame(),
+      gameScreen: QuickConvertGame(),
     ),
   ];
 
@@ -101,13 +101,13 @@ class MathGamesPage extends StatelessWidget {
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
                   ],
                 ),
               ),

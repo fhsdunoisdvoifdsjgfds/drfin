@@ -13,8 +13,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
       child: Container(
         height: 100,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: const Color(0xff181818),
+        decoration: const BoxDecoration(
+          color: Color(0xff181818),
         ),
         child: BlocBuilder<NavBloc, NavState>(
           builder: (context, state) {

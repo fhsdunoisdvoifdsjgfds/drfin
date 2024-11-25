@@ -7,7 +7,6 @@ import '../../../core/utilsss.dart';
 import '../../../blocs/nav/nav_bloc.dart';
 import '../../income/pages/income_page.dart';
 import '../../news/pages/news_page.dart';
-import '../../quiz/pages/quiz_page.dart';
 import '../widgets/my_nav.dart';
 import 'initial_page.dart';
 

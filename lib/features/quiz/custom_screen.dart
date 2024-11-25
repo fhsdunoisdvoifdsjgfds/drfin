@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:tsafer/core/models/questionn.dart';
 import 'package:tsafer/features/quiz/pages/quiz_page.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import 'custom_data_widget.dart';
 
@@ -42,7 +40,7 @@ class _QuizCategoriesPageState extends State<QuizCategoriesPage> {
           'Test your knowledge about stocks, bonds, and investment strategies',
       icon: CupertinoIcons.chart_bar_fill,
       color: CupertinoColors.systemBlue,
-      questions: investingQuestions, // Ваш список вопросов по инвестициям
+      questions: investingQuestions,
     ),
     QuizCategory(
       id: 'crypto',
@@ -50,7 +48,7 @@ class _QuizCategoriesPageState extends State<QuizCategoriesPage> {
       description: 'Learn about blockchain, crypto trading, and digital assets',
       icon: CupertinoIcons.bitcoin_circle_fill,
       color: CupertinoColors.systemOrange,
-      questions: cryptoQuestions, // Ваш список вопросов по крипте
+      questions: cryptoQuestions,
     ),
     QuizCategory(
       id: 'personal',
@@ -58,8 +56,7 @@ class _QuizCategoriesPageState extends State<QuizCategoriesPage> {
       description: 'Budgeting, saving, and managing personal wealth',
       icon: CupertinoIcons.money_dollar_circle_fill,
       color: CupertinoColors.systemGreen,
-      questions:
-          personalFinanceQuestions, // Ваш список вопросов по личным финансам
+      questions: personalFinanceQuestions,
     ),
     QuizCategory(
       id: 'trading',
@@ -67,7 +64,7 @@ class _QuizCategoriesPageState extends State<QuizCategoriesPage> {
       description: 'Master technical analysis and trading strategies',
       icon: CupertinoIcons.graph_circle_fill,
       color: CupertinoColors.systemPurple,
-      questions: tradingQuestions, // Ваш список вопросов по трейдингу
+      questions: tradingQuestions,
     ),
   ];
 
@@ -233,14 +230,6 @@ class _CategoryCard extends StatelessWidget {
                                 color: CupertinoColors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              '20 Questions',
-                              style: TextStyle(
-                                color: CupertinoColors.white.withOpacity(0.6),
-                                fontSize: 14,
                               ),
                             ),
                           ],

@@ -2,11 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../core/config/my_fonts.dart';
 import '../../core/utilsss.dart';
-import '../../core/widgets/main_button.dart';
-import '../../core/widgets/my_button.dart';
 import '../../core/widgets/degree_widget.dart';
 import '../../core/widgets/svg_widget.dart';
 

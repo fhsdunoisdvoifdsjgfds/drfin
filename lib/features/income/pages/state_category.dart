@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:tsafer/blocs/btn/btn_bloc.dart';
 import 'package:tsafer/blocs/incom/incom_bloc.dart';
 import 'package:tsafer/blocs/nav/nav_bloc.dart';
@@ -324,52 +326,52 @@ class _IncomePageState extends State<IncomePage> {
 }
 
 final List<_IncomeCategory> categories = [
-  _IncomeCategory(
+  const _IncomeCategory(
     name: 'Salary',
     icon: CupertinoIcons.money_dollar_circle_fill,
     color: CupertinoColors.systemGreen,
   ),
-  _IncomeCategory(
+  const _IncomeCategory(
     name: 'Investments',
     icon: CupertinoIcons.graph_circle_fill,
     color: CupertinoColors.systemBlue,
   ),
-  _IncomeCategory(
+  const _IncomeCategory(
     name: 'Real Estate',
     icon: CupertinoIcons.house_fill,
     color: CupertinoColors.systemOrange,
   ),
-  _IncomeCategory(
+  const _IncomeCategory(
     name: 'Dividends',
     icon: CupertinoIcons.chart_bar_fill,
     color: CupertinoColors.systemPurple,
   ),
-  _IncomeCategory(
+  const _IncomeCategory(
     name: 'Freelance',
     icon: CupertinoIcons.briefcase_fill,
     color: CupertinoColors.systemIndigo,
   ),
-  _IncomeCategory(
+  const _IncomeCategory(
     name: 'Side Business',
     icon: CupertinoIcons.shopping_cart,
     color: CupertinoColors.systemPink,
   ),
-  _IncomeCategory(
+  const _IncomeCategory(
     name: 'Consulting',
     icon: CupertinoIcons.person_2_fill,
     color: CupertinoColors.systemTeal,
   ),
-  _IncomeCategory(
+  const _IncomeCategory(
     name: 'Royalties',
     icon: CupertinoIcons.star_fill,
     color: CupertinoColors.systemYellow,
   ),
-  _IncomeCategory(
+  const _IncomeCategory(
     name: 'Rental',
     icon: CupertinoIcons.home,
     color: CupertinoColors.systemRed,
   ),
-  _IncomeCategory(
+  const _IncomeCategory(
     name: 'Other',
     icon: CupertinoIcons.plus_circle_fill,
     color: CupertinoColors.systemGrey,

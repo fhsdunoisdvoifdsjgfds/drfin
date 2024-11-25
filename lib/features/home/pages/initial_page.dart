@@ -54,10 +54,10 @@ class InitialPageState extends State<InitialPage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.black,
-      navigationBar: CupertinoNavigationBar(
+      navigationBar: const CupertinoNavigationBar(
         backgroundColor: CupertinoColors.black,
         border: null,
-        middle: const Text(
+        middle: Text(
           'Income',
           style: TextStyle(
             color: CupertinoColors.white,
@@ -280,15 +280,15 @@ class InitialPageState extends State<InitialPage> {
                                   .add(IncomDelete(incom: incom));
                               ScaffoldMessenger.of(context).showSnackBar(
                                 CupertinoSnackBar(
-                                  content: Row(
+                                  content: const Row(
                                     children: [
-                                      const Icon(
+                                      Icon(
                                         CupertinoIcons.delete,
                                         color: CupertinoColors.white,
                                         size: 18,
                                       ),
-                                      const SizedBox(width: 8),
-                                      const Text(
+                                      SizedBox(width: 8),
+                                      Text(
                                         'Transaction deleted',
                                         style: TextStyle(
                                             color: CupertinoColors.white),
@@ -359,16 +359,16 @@ class InitialPageState extends State<InitialPage> {
       builder: (context, state) {
         if (state is IncomLoaded) {
           if (state.incoms.isEmpty) {
-            return Center(
+            return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
+                  Icon(
                     CupertinoIcons.doc_text_search,
                     size: 48,
                     color: CupertinoColors.systemGrey,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   Text(
                     'No transactions yet',
                     style: TextStyle(
@@ -457,13 +457,14 @@ class InitialPageState extends State<InitialPage> {
             child: CupertinoTextField(
               controller: controller,
               decoration: null,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               style: const TextStyle(
                 color: CupertinoColors.white,
                 fontSize: 17,
               ),
               placeholder: symbol,
-              placeholderStyle: TextStyle(
+              placeholderStyle: const TextStyle(
                 color: CupertinoColors.systemGrey,
                 fontSize: 17,
               ),

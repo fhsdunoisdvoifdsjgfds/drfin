@@ -114,7 +114,6 @@ final List<Questionn> investingQuestions = [
   ),
 ];
 
-// Вопросы по криптовалюте (Cryptocurrency)
 final List<Questionn> cryptoQuestions = [
   Questionn(
     title: 'What is blockchain?',
@@ -226,7 +225,6 @@ final List<Questionn> cryptoQuestions = [
   ),
 ];
 
-// Вопросы по личным финансам (Personal Finance)
 final List<Questionn> personalFinanceQuestions = [
   Questionn(
     title: 'What is an emergency fund?',
@@ -331,7 +329,6 @@ final List<Questionn> personalFinanceQuestions = [
   ),
 ];
 
-// Вопросы по трейдингу (Trading)
 final List<Questionn> tradingQuestions = [
   Questionn(
     title: 'What is a bull market?',

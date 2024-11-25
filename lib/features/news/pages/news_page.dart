@@ -37,10 +37,10 @@ class _NewsPageState extends State<NewsPage> {
       child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          CupertinoSliverNavigationBar(
+          const CupertinoSliverNavigationBar(
             backgroundColor: CupertinoColors.black,
             border: null,
-            largeTitle: const Text(
+            largeTitle: Text(
               'News',
               style: TextStyle(
                 color: CupertinoColors.white,
