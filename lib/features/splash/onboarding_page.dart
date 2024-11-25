@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,9 +25,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
       final pref = await SharedPreferences.getInstance();
       pref.setBool('onboard', false);
       if (mounted) context.go('/home');
-      // setState(() {
-      //   index = 1;
-      // });
     } else {
       setState(() {
         index++;
@@ -37,6 +35,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF181818),
       body: Column(
         children: [
           SizedBox(height: getStatusBar(context, height: 30)),
@@ -66,14 +65,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: const Color(0xFF222222),
                         borderRadius: BorderRadius.circular(14),
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
-                            color: Color(0xff767676),
+                            color: Colors.black.withOpacity(0.3),
                             blurRadius: 94,
                             spreadRadius: -30,
-                            offset: Offset(0, 40),
+                            offset: const Offset(0, 40),
                           ),
                         ],
                       ),
@@ -81,21 +80,21 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         children: [
                           SizedBox(height: 44),
                           Text(
-                            'Emily Walkers',
+                            'Sarah Johnson',
                             style: TextStyle(
-                              color: Color(0xff171B34),
+                              color: Color(0xffFEDB35),
                               fontSize: 12,
-                              fontFamily: MyFonts.w800,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Glad to hear that! It\'s always nice when a mobile app helps improve financial management. Simplified income tracking, as well as easy methods for adding income sources, setting categories, and entering specific information help save a lot of time and make financial management more efficient. Keep using the app to easily take control of your finances!',
+                            'TSafer has completely transformed how I manage my finances. The intuitive interface makes tracking income and expenses effortless, while the built-in currency converter helps me make quick financial decisions. The smart categorization system gives me a clear picture of my spending patterns.',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Color(0xff505050),
+                              color: Colors.white70,
                               fontSize: 10,
-                              fontFamily: MyFonts.w500,
+                              fontWeight: FontWeight.w500,
                               height: 1.8,
                             ),
                           ),
@@ -111,7 +110,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       width: 66,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white,
+                        color: const Color(0xFF222222),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.25),
@@ -161,42 +160,28 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         width: 102,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(26),
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xffEDEDED),
-                              Colors.white,
-                            ],
-                          ),
-                          boxShadow: const [
+                          color: const Color(0xFF222222),
+                          boxShadow: [
                             BoxShadow(
-                              color: Colors.black,
+                              color: Colors.black.withOpacity(0.3),
                               blurRadius: 4,
-                              offset: Offset(0, 4),
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
                         child: Center(
-                          child: Container(
-                            height: 22,
-                            width: 98,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(26),
-                              gradient: const LinearGradient(
-                                colors: [
-                                  Colors.white,
-                                  Color(0xffEDEDED),
-                                ],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(
+                              5,
+                              (index) => const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 2),
+                                child: Icon(
+                                  CupertinoIcons.star_fill,
+                                  color: Color(0xffFEDB35),
+                                  size: 14,
+                                ),
                               ),
-                            ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SVGWidgett('assets/star.svg'),
-                                SVGWidgett('assets/star.svg'),
-                                SVGWidgett('assets/star.svg'),
-                                SVGWidgett('assets/star.svg'),
-                                SVGWidgett('assets/star.svg'),
-                              ],
                             ),
                           ),
                         ),
@@ -210,7 +195,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           Container(
             height: 280,
             decoration: const BoxDecoration(
-              color: Color(0xff343434),
+              color: Color(0xFF222222),
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(16),
               ),
@@ -222,22 +207,22 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 22),
                     child: Text(
-                      'Manage your income, stay informed and control your finances - all available in one app!',
+                      'Take Control of Your Finances\nTrack, Convert, Grow',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: MyFonts.w600,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
                   ),
                 if (index == 2)
                   const Text(
-                    'We value your feedback',
+                    'Join Our Community',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: MyFonts.w800,
+                      color: Color(0xffFEDB35),
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                 if (index == 2) const Spacer(),
@@ -245,29 +230,46 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Text(
-                      'Every day we are getting better due to your ratings and reviews — that helps us protect your accounts.',
+                      'Your feedback drives our innovation. Help us make TSafer even better for managing your finances.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 11,
-                        fontFamily: MyFonts.w500,
+                        color: Colors.white70,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
                 const Spacer(),
-                MainButton(
-                  title: 'Continue',
-                  horizontalPadding: 16,
-                  onPressed: onContinue,
+                Container(
+                  height: 56,
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xffFEDB35),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: CupertinoButton(
+                    onPressed: onContinue,
+                    child: const Center(
+                      child: Text(
+                        'Continue',
+                        style: TextStyle(
+                          color: Color(0xFF181818),
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 32),
-                MyButton(
+                CupertinoButton(
                   onPressed: () {},
                   minSize: 20,
                   child: Text(
                     'Terms of use  |  Privacy Policy',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withOpacity(0.5),
+                      fontSize: 13,
                     ),
                   ),
                 ),
@@ -294,7 +296,7 @@ class _Indicator extends StatelessWidget {
       child: Container(
         height: 3,
         decoration: BoxDecoration(
-          color: active ? Colors.white : Colors.white.withOpacity(0.3),
+          color: active ? const Color(0xffFEDB35) : const Color(0xFF222222),
           borderRadius: BorderRadius.circular(3),
         ),
       ),
