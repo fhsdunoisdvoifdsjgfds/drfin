@@ -1,15 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:dark_fin/blocs/btn/btn_bloc.dart';
+import 'package:dark_fin/blocs/incom/incom_bloc.dart';
+import 'package:dark_fin/blocs/nav/nav_bloc.dart';
+import 'package:dark_fin/core/models/incom.dart';
+import 'package:dark_fin/core/utilsss.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../blocs/btn/btn_bloc.dart';
-import '../../../blocs/incom/incom_bloc.dart';
-import '../../../blocs/nav/nav_bloc.dart';
-import '../../../core/models/incom.dart';
-import '../../../core/utilsss.dart';
-import '../../../core/widgets/main_button.dart';
-import '../../../core/widgets/tab_button.dart';
-import '../../../core/widgets/my_field.dart';
-import '../../../core/widgets/page_title.dart';
+import 'state_category.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({super.key});
@@ -22,11 +19,6 @@ class _IncomePageState extends State<IncomePage> {
   final categoryController = TextEditingController();
   final titleController = TextEditingController();
   final amountController = TextEditingController();
-  List<String> categories = [
-    'Personal',
-    'Real estate',
-    'Dividends',
-  ];
 
   void checkButton() {
     context.read<BtnBloc>().add(
@@ -40,22 +32,31 @@ class _IncomePageState extends State<IncomePage> {
         );
   }
 
-  void onCategory(String value) {
-    if (categoryController.text == value) {
-      categoryController.clear();
-    } else {
-      categoryController.text = value;
-    }
+  void onCategory(String category) {
+    setState(() {
+      if (categoryController.text == category) {
+        categoryController.clear();
+      } else {
+        categoryController.text = category;
+      }
+    });
     checkButton();
   }
 
   void onAdd() {
+    if (titleController.text.isEmpty ||
+        amountController.text.isEmpty ||
+        categoryController.text.isEmpty) {
+      return;
+    }
+
     final incom = Incom(
       id: getTimestamp(),
       category: categoryController.text,
       title: titleController.text,
       amount: int.parse(amountController.text),
     );
+
     context.read<IncomBloc>().add(IncomAdd(incom: incom));
     context.read<NavBloc>().add(ChangeNav(index: 1));
     context.read<BtnBloc>().add(DisableBtn());
@@ -77,57 +78,149 @@ class _IncomePageState extends State<IncomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: getStatusBar(context, height: 6)),
-        const PageTitle('Income'),
-        const SizedBox(height: 26),
-        SizedBox(
-          height: 36,
-          child: BlocBuilder<BtnBloc, BtnState>(
-            builder: (context, state) {
-              return ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 22),
-                children: List.generate(
-                  categories.length,
-                  (index) {
-                    return TabButton(
-                      title: categories[index],
-                      current: categoryController.text,
-                      onPressed: onCategory,
-                    );
-                  },
-                ),
-              );
-            },
+    return CupertinoPageScaffold(
+      backgroundColor: CupertinoColors.black,
+      navigationBar: CupertinoNavigationBar(
+        backgroundColor: CupertinoColors.black,
+        border: null,
+        middle: const Text(
+          'Add Income',
+          style: TextStyle(color: CupertinoColors.white),
+        ),
+        leading: CupertinoButton(
+          padding: EdgeInsets.zero,
+          child: const Icon(
+            CupertinoIcons.back,
+            color: CupertinoColors.white,
           ),
+          onPressed: () => context.read<NavBloc>().add(ChangeNav(index: 1)),
         ),
-        const SizedBox(height: 50),
-        const PageTitle('Add Transaction'),
-        const SizedBox(height: 16),
-        MyField(
-          controller: titleController,
-          hintText: 'Income description',
-          horizontalPadding: 16,
-          onChanged: checkButton,
+      ),
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 40,
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
+                separatorBuilder: (context, index) => const SizedBox(width: 8),
+                itemBuilder: (context, index) {
+                  final category = categories[index];
+                  final isSelected = categoryController.text == category.name;
+
+                  return CupertinoButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    color: isSelected
+                        ? CupertinoColors.systemYellow
+                        : const Color(0xFF1C1C1E),
+                    borderRadius: BorderRadius.circular(20),
+                    onPressed: () => onCategory(category.name),
+                    child: Text(
+                      category.name,
+                      style: TextStyle(
+                        color: isSelected
+                            ? CupertinoColors.black
+                            : CupertinoColors.white,
+                        fontSize: 15,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 32),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Transaction Details',
+                    style: TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1C1C1E),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        CupertinoTextField(
+                          controller: titleController,
+                          decoration: null,
+                          style: const TextStyle(color: CupertinoColors.white),
+                          placeholder: 'Income description',
+                          placeholderStyle: const TextStyle(
+                            color: CupertinoColors.systemGrey,
+                          ),
+                          padding: const EdgeInsets.all(16),
+                          onChanged: (_) => checkButton(),
+                        ),
+                        Container(
+                          height: 1,
+                          color: CupertinoColors.systemGrey6,
+                        ),
+                        CupertinoTextField(
+                          controller: amountController,
+                          decoration: null,
+                          style: const TextStyle(color: CupertinoColors.white),
+                          placeholder: 'Income amount',
+                          placeholderStyle: const TextStyle(
+                            color: CupertinoColors.systemGrey,
+                          ),
+                          padding: const EdgeInsets.all(16),
+                          keyboardType: TextInputType.number,
+                          onChanged: (_) => checkButton(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: BlocBuilder<BtnBloc, BtnState>(
+                builder: (context, state) {
+                  final isActive = state is BtnActive;
+
+                  return SizedBox(
+                    width: double.infinity,
+                    child: CupertinoButton(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      borderRadius: BorderRadius.circular(12),
+                      color: isActive
+                          ? CupertinoColors.systemYellow
+                          : const Color(0xFF1C1C1E),
+                      onPressed: isActive ? onAdd : null,
+                      child: Text(
+                        'Add Income',
+                        style: TextStyle(
+                          color: isActive
+                              ? CupertinoColors.black
+                              : CupertinoColors.systemGrey,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 16),
-        MyField(
-          controller: amountController,
-          hintText: 'Income amount',
-          onlyNumber: true,
-          length: 7,
-          horizontalPadding: 16,
-          onChanged: checkButton,
-        ),
-        const SizedBox(height: 56),
-        MainButton(
-          title: 'Add income',
-          horizontalPadding: 16,
-          onPressed: onAdd,
-        ),
-      ],
+      ),
     );
   }
 }

@@ -1,12 +1,8 @@
+import 'package:dark_fin/core/models/newss.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
-import '../../../core/config/my_fonts.dart';
-import '../../../core/models/newss.dart';
-import '../../../core/utilsss.dart';
-import '../../../core/widgets/my_button.dart';
-import '../../../core/widgets/pop_button.dart';
+import 'dart:ui';
 
 class NewsReadPage extends StatelessWidget {
   const NewsReadPage({
@@ -18,119 +14,156 @@ class NewsReadPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: getStatusBar(context, height: 6)),
-          Row(
-            children: [
-              const SizedBox(width: 22),
-              PopButton(
-                title: 'Back',
-                onPressed: () {
-                  context.pop();
-                },
-              ),
-            ],
+    return Material(
+      type: MaterialType.transparency,
+      child: CupertinoPageScaffold(
+        backgroundColor: CupertinoColors.black,
+        navigationBar: CupertinoNavigationBar(
+          backgroundColor: CupertinoColors.black.withOpacity(0.7),
+          border: null,
+          leading: CupertinoButton(
+            padding: EdgeInsets.zero,
+            child: const Icon(
+              CupertinoIcons.back,
+              color: CupertinoColors.white,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8,
-              ),
+        ),
+        child: Stack(
+          children: [
+            ListView(
+              padding: EdgeInsets.zero,
               children: [
-                const SizedBox(height: 7),
-                Text(
-                  news.title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontFamily: MyFonts.w800,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl: news.image,
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => Container(
+                          color: const Color(0xFF2C2C2E),
+                          child: const Icon(
+                            CupertinoIcons.photo,
+                            color: CupertinoColors.systemGrey,
+                            size: 40,
+                          ),
+                        ),
+                      ),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              CupertinoColors.black.withOpacity(0.7),
+                              CupertinoColors.black,
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 16),
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(14),
-                  child: CachedNetworkImage(
-                    imageUrl: news.image,
-                    width: double.infinity,
-                    height: 285,
-                    fit: BoxFit.cover,
-                    errorWidget: (context, url, error) {
-                      return Container();
-                    },
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: CupertinoColors.systemYellow.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          news.category,
+                          style: const TextStyle(
+                            color: CupertinoColors.systemYellow,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      // Title
+                      Text(
+                        news.title,
+                        style: const TextStyle(
+                          color: CupertinoColors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            news.time,
+                            style: TextStyle(
+                              color: CupertinoColors.white.withOpacity(0.6),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1C1C1E),
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          news.body,
+                          style: TextStyle(
+                            color: CupertinoColors.white.withOpacity(0.9),
+                            fontSize: 16,
+                            height: 1.6,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  news.time,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontFamily: MyFonts.w400,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xff343434),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Text(
-                    news.body,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontFamily: MyFonts.w500,
+              ],
+            ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 100,
+              child: ClipRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          CupertinoColors.black.withOpacity(0.7),
+                          CupertinoColors.black.withOpacity(0),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 8),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Button extends StatelessWidget {
-  const _Button({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 36,
-      width: 113,
-      decoration: BoxDecoration(
-        color: const Color(0xff343434),
-        borderRadius: BorderRadius.circular(36),
-      ),
-      child: MyButton(
-        onPressed: () {},
-        minSize: 36,
-        child: Row(
-          children: [
-            const SizedBox(width: 10),
-            Icon(
-              title == 'Like' ? Icons.favorite : Icons.ios_share_rounded,
-              size: 16,
-              color: Colors.white,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontFamily: MyFonts.w500,
               ),
             ),
           ],

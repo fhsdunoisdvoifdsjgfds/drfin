@@ -20,6 +20,7 @@ class NavBloc extends Bloc<NavEvent, NavState> {
     if (event.index == 1) emit(NavInitial());
     if (event.index == 2) emit(NavIncome());
     if (event.index == 3) emit(NavNews());
-    if (event.index == 4) emit(NavQuiz());
+    if (event.index == 4) emit(NavGames());
+    if (event.index == 5) emit(NavQuiz());
   }
 }

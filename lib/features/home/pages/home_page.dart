@@ -1,3 +1,5 @@
+import 'package:dark_fin/features/game/game_screen.dart';
+import 'package:dark_fin/features/quiz/custom_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,12 +26,13 @@ class HomePage extends StatelessWidget {
               builder: (context, state) {
                 if (state is NavIncome) return const IncomePage();
                 if (state is NavNews) return const NewsPage();
-                if (state is NavQuiz) return const QuizPage();
+                if (state is NavQuiz) return const QuizCategoriesPage();
+                if (state is NavGames) return MathGamesPage();
                 return const InitialPage();
               },
             ),
           ),
-          const MyNav(),
+          const CustomBottomNavigationBar(),
         ],
       ),
     );

@@ -1,47 +1,53 @@
+import 'package:dark_fin/blocs/nav/nav_bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/config/my_fonts.dart';
-import '../../../core/utilsss.dart';
-import '../../../core/widgets/svg_widget.dart';
-import '../../../core/widgets/my_button.dart';
-import '../../../blocs/nav/nav_bloc.dart';
-
-class MyNav extends StatelessWidget {
-  const MyNav({super.key});
+class CustomBottomNavigationBar extends StatelessWidget {
+  const CustomBottomNavigationBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 62 + getBot(context),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        decoration: const BoxDecoration(
-          color: Color(0xff181818),
+        height: 100,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: const Color(0xff181818),
         ),
         child: BlocBuilder<NavBloc, NavState>(
           builder: (context, state) {
             return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _NavBarButton(
+                _NavigationButton(
                   index: 1,
+                  icon: CupertinoIcons.house_fill,
                   title: 'Home',
                   active: state is NavInitial,
                 ),
-                _NavBarButton(
+                _NavigationButton(
                   index: 2,
+                  icon: CupertinoIcons.arrow_right_arrow_left_circle_fill,
                   title: 'Income',
                   active: state is NavIncome,
                 ),
-                _NavBarButton(
+                _NavigationButton(
                   index: 3,
+                  icon: CupertinoIcons.news_solid,
                   title: 'News',
                   active: state is NavNews,
                 ),
-                _NavBarButton(
+                _NavigationButton(
                   index: 4,
+                  icon: CupertinoIcons.game_controller_solid,
+                  title: 'Games',
+                  active: state is NavGames,
+                ),
+                _NavigationButton(
+                  index: 5,
+                  icon: CupertinoIcons.question,
                   title: 'Quiz',
                   active: state is NavQuiz,
                 ),
@@ -54,47 +60,74 @@ class MyNav extends StatelessWidget {
   }
 }
 
-class _NavBarButton extends StatelessWidget {
-  const _NavBarButton({
+class _NavigationButton extends StatelessWidget {
+  const _NavigationButton({
     required this.index,
+    required this.icon,
     required this.title,
     required this.active,
   });
 
   final int index;
+  final IconData icon;
   final String title;
   final bool active;
 
   @override
   Widget build(BuildContext context) {
-    return MyButton(
-      onPressed: active
+    return GestureDetector(
+      onTap: active
           ? null
           : () {
               context.read<NavBloc>().add(ChangeNav(index: index));
             },
-      padding: 0,
-      child: SizedBox(
-        width: 62,
+      child: Container(
+        width: 65,
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 14),
-            SizedBox(
-              height: 25,
-              child: SVGWidgett(
-                index == 2 && active
-                    ? 'assets/tab5.svg'
-                    : 'assets/tab$index.svg',
-                color: active ? const Color(0xffFEDB35) : Colors.white,
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 1.0, end: active ? 1.2 : 1.0),
+              duration: const Duration(milliseconds: 200),
+              builder: (context, scale, child) {
+                return Transform.scale(
+                  scale: scale,
+                  child: child,
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: active
+                      ? const Color(0xffFEDB35).withOpacity(0.1)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  color: active ? const Color(0xffFEDB35) : Colors.white,
+                  size: 24,
+                ),
               ),
             ),
             const SizedBox(height: 4),
-            Text(
-              title,
-              style: TextStyle(
-                color: active ? const Color(0xffFEDB35) : Colors.white,
-                fontSize: 10,
-                fontFamily: MyFonts.w500,
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 1.0, end: active ? 1.1 : 1.0),
+              duration: const Duration(milliseconds: 200),
+              builder: (context, scale, child) {
+                return Transform.scale(
+                  scale: scale,
+                  child: child,
+                );
+              },
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: active ? const Color(0xffFEDB35) : Colors.white,
+                  fontSize: 11,
+                  fontWeight: active ? FontWeight.w600 : FontWeight.w500,
+                ),
               ),
             ),
           ],

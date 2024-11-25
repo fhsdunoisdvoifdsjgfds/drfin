@@ -12,7 +12,12 @@ import '../widgets/answer_widget.dart';
 import '../widgets/question_widget.dart';
 
 class QuizPage extends StatefulWidget {
-  const QuizPage({super.key});
+  final List<Questionn> questions;
+
+  const QuizPage({
+    super.key,
+    required this.questions,
+  });
 
   @override
   State<QuizPage> createState() => _QuizPageState();
@@ -24,45 +29,68 @@ class _QuizPageState extends State<QuizPage> {
   Answer _answer = defaultAnswer;
 
   void checkButton() {
-    context.read<BtnBloc>().add(CheckBtnActive(controllers: [_answer.title]));
+    if (_answer.title.isNotEmpty) {
+      context.read<BtnBloc>().add(
+            CheckBtnActive(
+              controllers: ['active'],
+            ),
+          );
+    } else {
+      context.read<BtnBloc>().add(DisableBtn());
+    }
   }
 
   void onAnswer(Answer value) {
-    _answer = value;
+    setState(() {
+      _answer = value;
+    });
     checkButton();
   }
 
   void onContinue() {
-    if (_answer.isCorrect) correctAnswers++;
-    _answer = defaultAnswer;
-    if (index == 19) {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return MyDialog(
-            title: 'Correct answers: $correctAnswers',
-            onlyClose: true,
-            onYes: () {
-              index = 0;
-              context.pop();
-              checkButton();
-            },
-          );
-        },
-      );
-    } else {
-      index++;
-      checkButton();
+    if (_answer.title.isEmpty) return;
+
+    if (_answer.isCorrect) {
+      setState(() {
+        correctAnswers++;
+      });
     }
+
+    setState(() {
+      _answer = defaultAnswer;
+      if (index == 19) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return MyDialog(
+              title: 'Correct answers: $correctAnswers',
+              onlyClose: true,
+              onYes: () {
+                setState(() {
+                  index = 0;
+                  correctAnswers = 0;
+                  _answer = defaultAnswer;
+                });
+                context.pop();
+                checkButton();
+              },
+            );
+          },
+        );
+      } else {
+        index++;
+      }
+    });
+    context.read<BtnBloc>().add(DisableBtn());
   }
 
   @override
   void initState() {
     super.initState();
-    checkButton();
-    questionsList.shuffle();
-    for (Questionn question in questionsList) {
+    context.read<BtnBloc>().add(DisableBtn());
+    widget.questions.shuffle();
+    for (Questionn question in widget.questions) {
       question.answers.shuffle();
     }
   }
@@ -72,25 +100,21 @@ class _QuizPageState extends State<QuizPage> {
     return Column(
       children: [
         SizedBox(height: getStatusBar(context, height: 56)),
-        Center(
-          child: BlocBuilder<BtnBloc, BtnState>(
-            builder: (context, state) {
-              return Text(
-                'Question ${index + 1}/20',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontFamily: MyFonts.w800,
-                ),
-              );
+        Align(
+          alignment: Alignment.topLeft,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
             },
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
+            ),
           ),
         ),
-        const SizedBox(height: 30),
-        BlocBuilder<BtnBloc, BtnState>(
-          builder: (context, state) {
-            return QuestionWidget(question: questionsList[index].title);
-          },
+        SizedBox(height: 10),
+        Center(
+          child: QuestionWidget(question: widget.questions[index].title),
         ),
         const SizedBox(height: 30),
         BlocBuilder<BtnBloc, BtnState>(
@@ -126,10 +150,14 @@ class _QuizPageState extends State<QuizPage> {
           },
         ),
         const SizedBox(height: 25),
-        MainButton(
-          title: 'Continue',
-          horizontalPadding: 16,
-          onPressed: onContinue,
+        BlocBuilder<BtnBloc, BtnState>(
+          builder: (context, state) {
+            return MainButton(
+              title: 'Continue',
+              horizontalPadding: 16,
+              onPressed: onContinue,
+            );
+          },
         ),
       ],
     );

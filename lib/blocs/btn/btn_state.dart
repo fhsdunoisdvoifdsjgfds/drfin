@@ -6,3 +6,5 @@ sealed class BtnState {}
 final class BtnInitial extends BtnState {}
 
 final class BtnInactive extends BtnState {}
+
+class BtnActive extends BtnState {}

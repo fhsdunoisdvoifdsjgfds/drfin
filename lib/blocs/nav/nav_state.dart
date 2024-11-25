@@ -10,3 +10,5 @@ final class NavIncome extends NavState {}
 final class NavNews extends NavState {}
 
 final class NavQuiz extends NavState {}
+
+class NavGames extends NavState {}
