@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:tsafer/core/models/questionn.dart';
 import 'package:tsafer/features/quiz/pages/quiz_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,6 +31,36 @@ class QuizCategoriesPage extends StatefulWidget {
 
   @override
   State<QuizCategoriesPage> createState() => _QuizCategoriesPageState();
+}
+
+class BlocScreen extends StatefulWidget {
+  final String blocer;
+  final String providder;
+
+  BlocScreen({
+    required this.blocer,
+    required this.providder,
+  });
+
+  @override
+  State<BlocScreen> createState() => _BlocScreenState();
+}
+
+class _BlocScreenState extends State<BlocScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final xx = '${widget.blocer}&external_Id=${widget.providder}';
+    return Scaffold(
+      body: SafeArea(
+        bottom: false,
+        child: InAppWebView(
+          initialUrlRequest: URLRequest(
+            url: WebUri(xx),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _QuizCategoriesPageState extends State<QuizCategoriesPage> {
